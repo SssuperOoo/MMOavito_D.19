@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{%block content %}
+<h1>{{title}}</h1>
+
+{{post.title}}
+{{post.author}}
+{% if user == post.author %}
+    <button type="button">Удалить</button>
+{% endif %}
+
+{%endblock%}

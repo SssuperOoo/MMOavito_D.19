@@ -1,0 +1,12 @@
+__pycache__/
+.idea/
+.venv/
+# Ignore environment file
+MMO/MMO/.env
+
+# Ignore media files
+MMO/media/
+uploads/
+
+# Ignore database
+*.sqlite3

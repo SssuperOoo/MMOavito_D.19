@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{%block content %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <style>
+        .form-label {
+            display: inline-block;
+            width: 150px; /* Настраиваемая ширина */
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .form-input {
+            width: 300px;
+            font-size: 16px;
+        }
+
+        .form-error {
+            color: red;
+            font-size: 14px;
+        }
+
+        form p {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        form button {
+            margin-left: 160px; /* Выравнивание кнопки по меткам */
+        }
+    </style>
+</head>
+<body>
+    <h1>Авторизация</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="next" value = "{{ next }}">
+        <div class="form-error">{{ form.non_field_errors }}</div>
+        {% for f in form %}
+        <p>
+            <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>
+            {{ f }}
+        </p>
+        <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+        <p>
+            <button type="submit">Войти</button>
+        </p>
+    </form>
+
+<p ><a href="{% url 'users:password_reset' %}">Забыли пароль?</a></p>
+</body>
+</html>
+{%endblock%}

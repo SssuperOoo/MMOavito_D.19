@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Все посты</title>
+</head>
+<body>
+    <h1>Все посты</h1>
+    <ul>
+        {% for post in posts %}
+            <li>{{ post.title }} - {{ post.author }} - {{ post.category }} - {{ post.create_date }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

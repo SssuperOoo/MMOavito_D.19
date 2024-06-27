@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% csrf_token %}
+
+
+<form method="get" action="">
+    {{ filterset.form.as_p }}
+    <button type="submit">Применить фильтр</button>
+</form>
+
+<div style="margin-bottom: 40px;"></div>
+<ul class="list-articles">
+
+    {% for o in otklik %}
+    {% if o.post.author == request.user %}
+    <li>
+        <div class='article-panel'>
+            <p class='first' style="display: block;">
+                Статус:{{ o.status|yesno:" Просмотрено, Новый отклик" }} <br>
+                Отправитель: {{ o.author }}
+            </p>
+            <p class="last">Дата: {{ o.create_date|date:"d-m-Y H:i:s" }}</p>
+        </div>
+        {% if o.post.photo %}
+        <img class="img-article-left" src="{{o.post.photo.url}}">
+        {% endif %}
+
+        <h2>
+            <span style="font-size: 14px;">категория: {{ o.post.get_category_display }}</span><br>
+            {{ o.post.title }}
+        </h2>
+
+        {% autoescape off %}
+        {{o.text|linebreaks|truncatewords:100}}
+        {% endautoescape %}
+
+        <p class="link-read-post"><a href="{% url 'delete_otklik' o.pk %}">Удалить</a></p>
+        {% if not o.status %}
+        <p class="link-read-post"><a href="{% url 'accept_otklik' o.pk %}">Принять</a></p>
+        {% endif %}
+        <div class="clear"></div>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block navigation %}
+{% if page_obj.has_other_pages %}
+<nav class="list-pages">
+    <ul>
+        {% if page_obj.has_previous %}
+        <li class="page-num">
+            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+        </li>
+        {% endif %}
+
+        {% for p in paginator.page_range %}
+        {% if page_obj.number == p %}
+        <li class="page-num page-num-selected">{{ p }}</li>
+        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-num">
+            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+        </li>
+        {% endif %}
+
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

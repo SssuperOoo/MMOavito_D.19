@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ post.title }}</h1>
+
+{% if post.photo %}
+    <p><img class="img-article-left" src="{{ post.photo.url }}"></p>
+{% endif %}
+
+<p>{{post.get_category_display }}</p> <!-- Отображение русского названия категории -->
+{{ post.text|linebreaks }}
+{{ post.files|safe }}
+{% endblock %}

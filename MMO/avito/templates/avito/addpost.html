@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+<script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+{%block content %}
+<h1>{{title}}</h1>
+<form action="" method = "POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    {{form.media}}
+    <p><button type = 'submit'>Отправить</button></p>
+</form>
+{%endblock%}

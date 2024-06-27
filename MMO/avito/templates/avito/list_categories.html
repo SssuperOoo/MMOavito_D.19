@@ -1,0 +1,3 @@
+{% for cat, cat_ru in cats %}
+    <li><a href="{% url 'category' cat %}">{{ cat_ru }}</a></li>
+{% endfor %}
