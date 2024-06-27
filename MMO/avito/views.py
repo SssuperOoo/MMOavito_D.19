@@ -39,8 +39,6 @@ class OtklikListView(LoginRequiredMixin, ListView):
     context_object_name = 'otklik'
 
 
-
-
     def get_queryset(self):
         queryset = super().get_queryset()
         self.filterset = MessageFilter(self.request.GET, queryset, user=self.request.user)
@@ -65,20 +63,6 @@ class PostCategoryListView(ListView):
         context['menu'] = menu
         return context
 
-# def handle_uploaded_file(f):
-#     with open(f"uploads/{f.name}", "wb+") as destination:
-#         for chunk in f.chunks():
-#             destination.write(chunk)
-
-
-
-# @login_required
-# def about(request):
-#     contact_list = Post.objects.all()
-#     paginator = Paginator(contact_list, 5)
-#     page_number = request.GET.get('page')
-#     page_obj = paginator.get_page(page_number)
-#     return render(request, 'avito/about.html', {'title': 'О сайте', 'menu': menu, 'page_obj': page_obj})
 
 class PostDetailView(DetailView):
     model = Post
@@ -88,10 +72,6 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-
-# def contact(request):
-#     return HttpResponse("Обратная связь")
 
 
 def page_not_found(request, exception):
@@ -128,6 +108,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
         send_notification_email(subject, message, [recipient_email])
 
         return response
+
 class PostUpdateView(LoginRequiredMixin,UpdateView):
 
     form_class = AddPostForm
